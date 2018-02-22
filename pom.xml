@@ -92,22 +92,6 @@
 
   <build>
 
-    <resources>
-
-      <resource>
-        <directory>src/main/resources</directory>
-      </resource>
-      
-      <resource>
-        <targetPath>META-INF</targetPath>
-        <directory />
-        <includes>
-          <include>LICENSE</include>
-        </includes>
-      </resource>
-
-    </resources>
-
     <pluginManagement>
       <plugins>
         
@@ -141,29 +125,31 @@
             <image>
               <name>microbean/microbean-weld:%l</name>
               <build>
-                <from>docker.io/microbean/microbean-base:0.1.0</from>
+                <from>docker.io/microbean/microbean-base:0.1.1</from>
                 <assembly>
                   <targetDir>/microbean</targetDir>
                   <inline>
                     <dependencySets>
                       <dependencySet>
                         <useProjectArtifact>false</useProjectArtifact>
+                        <excludes>
+                          <exclude>*:pom:*</exclude>
+                        </excludes>
                       </dependencySet>
                     </dependencySets>
                   </inline>
                   <user>microbean:microbean:microbean</user>
                 </assembly>
-                <entryPoint>
-                  <exec>
-                    <arg>java</arg>
-                    <arg>org.microbean.main.Main</arg>
-                  </exec>
-                </entryPoint>
                 <labels>
                   <build.git.sha1>${buildNumber}</build.git.sha1>
                   <build.git.branch>${scmBranch}</build.git.branch>
                   <build.timestamp>${timestamp}</build.timestamp>
                 </labels>
+                <cmd>
+                  <exec>
+                    <arg>org.microbean.main.Main</arg>
+                  </exec>
+                </cmd>
                 <tags>
                   <tag>latest</tag>
                 </tags>
