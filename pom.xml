@@ -13,10 +13,10 @@
   <parent>
     <groupId>org.microbean</groupId>
     <artifactId>microbean-pluginmanagement-pom</artifactId>
-    <version>3</version>
+    <version>5</version>
   </parent>
 
-  <name>MicroBean Weld SE Environment</name>
+  <name>microBean Weld SE Environment</name>
   <description>${project.name}</description>
   <inceptionYear>2017</inceptionYear>
   <url>https://microbean.github.io/${project.artifactId}</url>
@@ -38,28 +38,6 @@
       </dependency>
 
       <dependency>
-        <groupId>org.glassfish</groupId>
-        <artifactId>javax.el</artifactId>
-        <version>3.0.1-b08</version>
-        <type>jar</type>
-      </dependency>
-
-      <dependency>
-        <groupId>org.jboss</groupId>
-        <artifactId>jandex</artifactId>
-        <version>2.0.3.Final</version>
-        <type>jar</type>
-      </dependency>
-      
-      <dependency>
-        <groupId>org.jboss.weld</groupId>
-        <artifactId>weld-core-bom</artifactId>
-        <version>3.0.0.Final</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-
-      <dependency>
         <groupId>org.microbean</groupId>
         <artifactId>microbean-abstract-environment</artifactId>
         <version>0.1.0-SNAPSHOT</version>
@@ -68,10 +46,18 @@
       </dependency>
       
       <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-simple</artifactId>
-        <version>1.7.25</version>
+        <groupId>org.jboss</groupId>
+        <artifactId>jandex</artifactId>
+        <version>2.0.4.Final</version>
         <type>jar</type>
+      </dependency>
+      
+      <dependency>
+        <groupId>org.jboss.weld</groupId>
+        <artifactId>weld-core-bom</artifactId>
+        <version>3.0.3.Final</version>
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
       
     </dependencies>
@@ -80,13 +66,6 @@
   <dependencies>
 
     <!-- Runtime-scoped dependencies. -->
-
-    <dependency>
-      <groupId>org.glassfish</groupId>
-      <artifactId>javax.el</artifactId>
-      <type>jar</type>
-      <scope>runtime</scope>
-    </dependency>
 
     <dependency>
       <groupId>org.jboss</groupId>
@@ -109,13 +88,6 @@
       <scope>runtime</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <type>jar</type>
-      <scope>runtime</scope>
-    </dependency>
-    
   </dependencies>
 
   <build>
@@ -136,11 +108,101 @@
 
     </resources>
 
+    <pluginManagement>
+      <plugins>
+        
+        <plugin>
+          <groupId>io.fabric8</groupId>
+          <artifactId>docker-maven-plugin</artifactId>
+          <version>0.24.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>buildnumber-maven-plugin</artifactId>
+          <version>1.4</version>
+        </plugin>
+        
+      </plugins>
+    </pluginManagement>
+    
     <plugins>
 
       <plugin>
         <groupId>com.github.github</groupId>
         <artifactId>site-maven-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <configuration>
+          <images>
+            <image>
+              <name>microbean/microbean-weld:%l</name>
+              <build>
+                <from>docker.io/microbean/microbean-base:0.1.0</from>
+                <assembly>
+                  <targetDir>/microbean</targetDir>
+                  <inline>
+                    <dependencySets>
+                      <dependencySet>
+                        <useProjectArtifact>false</useProjectArtifact>
+                      </dependencySet>
+                    </dependencySets>
+                  </inline>
+                  <user>microbean:microbean:microbean</user>
+                </assembly>
+                <entryPoint>
+                  <exec>
+                    <arg>java</arg>
+                    <arg>org.microbean.main.Main</arg>
+                  </exec>
+                </entryPoint>
+                <labels>
+                  <build.git.sha1>${buildNumber}</build.git.sha1>
+                  <build.git.branch>${scmBranch}</build.git.branch>
+                  <build.timestamp>${timestamp}</build.timestamp>
+                </labels>
+                <tags>
+                  <tag>latest</tag>
+                </tags>
+                <user>microbean</user>
+                <workdir>/microbean</workdir>
+              </build>
+            </image>
+          </images>
+        </configuration>
+        <executions>
+          <execution>
+            <id>Build Docker image</id>
+            <goals>
+              <goal>build</goal>
+            </goals>
+            <phase>install</phase>
+          </execution>
+          <execution>
+            <id>Push Docker image</id>
+            <goals>
+              <goal>push</goal>
+            </goals>
+            <phase>deploy</phase>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>Retrieve current build number (Git commit id)</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>create</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       
     </plugins>
@@ -150,6 +212,7 @@
 
     <!-- maven-release-plugin properties -->
     <goals>deploy,site-deploy</goals>
+    <scmCommentPrefix>[maven-release-plugin] [skip ci]</scmCommentPrefix>
     
   </properties>
   
