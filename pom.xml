@@ -28,19 +28,35 @@
   <dependencyManagement>
     <dependencies>
 
+
+      <!-- Imports. -->
+      
+
+      <dependency>
+        <groupId>org.microbean</groupId>
+        <artifactId>microbean-abstract-environment</artifactId>
+        <version>0.1.2</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jboss.weld</groupId>
+        <artifactId>weld-core-bom</artifactId>
+        <version>3.0.3.Final</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+
+      <!-- Normal dependencies. -->
+      
+      
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>${project.artifactId}</artifactId>
         <version>${project.version}</version>
         <type>pom</type>
-      </dependency>
-
-      <dependency>
-        <groupId>org.microbean</groupId>
-        <artifactId>microbean-abstract-environment</artifactId>
-        <version>0.1.1</version>
-        <type>pom</type>
-        <scope>import</scope>
       </dependency>
       
       <dependency>
@@ -50,21 +66,15 @@
         <type>jar</type>
       </dependency>
       
-      <dependency>
-        <groupId>org.jboss.weld</groupId>
-        <artifactId>weld-core-bom</artifactId>
-        <version>3.0.3.Final</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      
     </dependencies>
   </dependencyManagement>
 
   <dependencies>
+    
 
     <!-- Runtime-scoped dependencies. -->
 
+    
     <dependency>
       <groupId>org.jboss</groupId>
       <artifactId>jandex</artifactId>
@@ -123,7 +133,7 @@
             <image>
               <name>microbean/microbean-weld:%l</name>
               <build>
-                <from>docker.io/microbean/microbean-base:0.1.1</from>
+                <from>docker.io/microbean/microbean-base:0.1.2</from>
                 <assembly>
                   <targetDir>/microbean</targetDir>
                   <inline>
