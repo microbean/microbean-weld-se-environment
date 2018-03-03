@@ -35,7 +35,7 @@
       <dependency>
         <groupId>org.microbean</groupId>
         <artifactId>microbean-abstract-environment</artifactId>
-        <version>0.3.0</version>
+        <version>0.3.2</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -147,7 +147,7 @@
             <image>
               <name>microbean/microbean-weld:%l</name>
               <build>
-                <from>docker.io/microbean/microbean-base:0.3.0</from>
+                <from>docker.io/microbean/microbean-base:0.3.2</from>
                 <assembly>
                   <targetDir>/microbean</targetDir>
                   <inline>
