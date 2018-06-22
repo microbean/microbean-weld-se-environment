@@ -1,6 +1,6 @@
-# microbean-weld-se-environment
+# microBean Weld SE Environment
 
-The `microbean-weld-se-environment` project consists primarily of a
+The microBean Weld SE Environment project consists primarily of a
 `pom.xml` file that describes runtime dependencies that together make
 up a microBean environment with RedHat's [Weld][weld] project as the
 backing CDI 2.0 implementation.
