@@ -35,7 +35,7 @@
       <dependency>
         <groupId>org.microbean</groupId>
         <artifactId>microbean-abstract-environment</artifactId>
-        <version>0.4.2</version>
+        <version>0.4.3</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -43,7 +43,7 @@
       <dependency>
         <groupId>org.jboss.weld</groupId>
         <artifactId>weld-core-bom</artifactId>
-        <version>3.0.4.Final</version>
+        <version>3.0.5.Final</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -120,7 +120,7 @@
         <plugin>
           <groupId>io.fabric8</groupId>
           <artifactId>docker-maven-plugin</artifactId>
-          <version>0.25.2</version>
+          <version>0.27.2</version>
         </plugin>
 
         <plugin>
@@ -147,7 +147,7 @@
             <image>
               <name>microbean/microbean-weld:%l</name>
               <build>
-                <from>docker.io/microbean/microbean-base:0.4.2</from>
+                <from>docker.io/microbean/microbean-base:0.4.3</from>
                 <assembly>
                   <targetDir>/microbean</targetDir>
                   <inline>
