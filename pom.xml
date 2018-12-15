@@ -10,7 +10,8 @@
   <parent>
     <groupId>org.microbean</groupId>
     <artifactId>microbean-pluginmanagement-pom</artifactId>
-    <version>5</version>
+    <version>9</version>
+    <relativePath/>
   </parent>
 
   <name>microBean Weld SE Environment</name>
@@ -35,7 +36,7 @@
       <dependency>
         <groupId>org.microbean</groupId>
         <artifactId>microbean-abstract-environment</artifactId>
-        <version>0.5.0</version>
+        <version>0.5.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -69,7 +70,7 @@
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-jdk14</artifactId>
-        <version>1.7.25</version>
+        <version>1.8.0-beta2</version>
         <type>jar</type>
       </dependency>
       
@@ -122,6 +123,16 @@
 
     <pluginManagement>
       <plugins>
+
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
         
         <plugin>
           <groupId>io.fabric8</groupId>
@@ -153,7 +164,7 @@
             <image>
               <name>microbean/microbean-weld:%l</name>
               <build>
-                <from>docker.io/microbean/microbean-base:0.5.0</from>
+                <from>docker.io/microbean/microbean-base:0.5.1</from>
                 <assembly>
                   <targetDir>/microbean</targetDir>
                   <inline>
@@ -222,12 +233,4 @@
     </plugins>
   </build>
 
-  <properties>
-
-    <!-- maven-release-plugin properties -->
-    <goals>deploy,site-deploy</goals>
-    <scmCommentPrefix>[maven-release-plugin] [skip ci]</scmCommentPrefix>
-    
-  </properties>
-  
 </project>
