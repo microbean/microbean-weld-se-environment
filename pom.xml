@@ -4,7 +4,7 @@
 
   <groupId>org.microbean</groupId>
   <artifactId>microbean-weld-se-environment</artifactId>
-  <version>0.6.3-SNAPSHOT</version>
+  <version>0.7.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <parent>
@@ -16,8 +16,8 @@
 
   <name>microBean™ Weld SE Environment</name>
   <description>${project.name}</description>
-  <inceptionYear>2017</inceptionYear>
   <url>https://microbean.github.io/${project.artifactId}</url>
+  <inceptionYear>2017</inceptionYear>
 
   <organization>
     <name>microBean™</name>
@@ -41,7 +41,7 @@
       <dependency>
         <groupId>org.microbean</groupId>
         <artifactId>microbean-abstract-environment</artifactId>
-        <version>0.5.5</version>
+        <version>0.6.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -49,7 +49,7 @@
       <dependency>
         <groupId>org.jboss.weld</groupId>
         <artifactId>weld-core-bom</artifactId>
-        <version>3.1.1.Final</version>
+        <version>3.1.2.Final</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -132,7 +132,7 @@
         <plugin>
           <groupId>io.fabric8</groupId>
           <artifactId>docker-maven-plugin</artifactId>
-          <version>0.30.0</version>
+          <version>0.31.0</version>
         </plugin>
 
         <plugin>
@@ -159,7 +159,7 @@
             <image>
               <name>microbean/microbean-weld:%l</name>
               <build>
-                <from>docker.io/microbean/microbean-base:0.5.5</from>
+                <from>docker.io/microbean/microbean-base:0.6.0</from>
                 <assembly>
                   <targetDir>/microbean</targetDir>
                   <inline>
